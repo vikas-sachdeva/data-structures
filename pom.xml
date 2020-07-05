@@ -9,6 +9,8 @@
     <version>1.0</version>
     <modules>
         <module>linked-lists</module>
+        <module>stack</module>
+        <module>queue</module>
     </modules>
     <packaging>pom</packaging>
 
