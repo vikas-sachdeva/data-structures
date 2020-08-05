@@ -8,8 +8,6 @@ public class HashTable<T, V> {
 
     private static final double DEFAULT_FILL_FACTOR = 1.5;
 
-    private int initialCapacity;
-
     private double growthFactor;
 
     private double fillFactor;
@@ -32,7 +30,6 @@ public class HashTable<T, V> {
         if (fillFactor <= 1) {
             throw new IllegalArgumentException("Fill factor can not be less than or equal to 1");
         }
-        this.initialCapacity = initialCapacity;
         this.growthFactor = growthFactor;
         this.fillFactor = fillFactor;
         totalCapacity = initialCapacity;

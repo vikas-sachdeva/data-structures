@@ -9,11 +9,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>tree</artifactId>
+    <artifactId>graph</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>binary-search-tree</module>
-        <module>min-heap</module>
+        <module>directed-graph</module>
     </modules>
 
 </project>
