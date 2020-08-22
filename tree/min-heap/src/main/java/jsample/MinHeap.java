@@ -102,7 +102,7 @@ public class MinHeap<T extends Comparable<T>> {
 
     public T extractMin() {
         if (nextElementIndex == 0) {
-            throw new IllegalArgumentException("Heap does not have any element.");
+            throw new IllegalStateException("Heap does not have any element.");
         }
         T min = (T) dataArray[0];
         dataArray[0] = dataArray[--nextElementIndex];

@@ -32,6 +32,6 @@ public class MinHeapTest {
         list.forEach(i -> minHeap.insert(i));
         Collections.sort(list);
         list.forEach(i -> AssertionsForInterfaceTypes.assertThat(minHeap.extractMin()).isEqualTo(i));
-        AssertionsForInterfaceTypes.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> minHeap.extractMin());
+        AssertionsForInterfaceTypes.assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> minHeap.extractMin());
     }
 }
