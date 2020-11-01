@@ -57,6 +57,6 @@ public class SinglyEndedQueueTest {
     public void getAllDataTest1() {
         AssertionsForInterfaceTypes.assertThat(stringSinglyEndedQueue.getAllData()).containsExactly("First", "middle", "Last");
         stringSinglyEndedQueue.enque("temp");
-        AssertionsForInterfaceTypes.assertThat(stringSinglyEndedQueue.getAllData()).containsExactly("First", "middle", "Last");
+        AssertionsForInterfaceTypes.assertThat(stringSinglyEndedQueue.getAllData()).containsExactly("First", "middle", "Last", "temp");
     }
 }
