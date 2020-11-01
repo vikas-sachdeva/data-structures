@@ -1,7 +1,10 @@
 package jsample;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
 
 public class Bst<T extends Comparable<T>> {
 
@@ -37,215 +40,47 @@ public class Bst<T extends Comparable<T>> {
         }
     }
 
-    public List<T> preOrderTraversal() {
+    public List<T> levelOrderTraversal() {
         List<T> list = new ArrayList<>();
-        preOrderTraversal(root, list);
+        if (root == null) {
+            return list;
+        }
+        Queue<Node<T>> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            Node<T> temp = queue.poll();
+            list.add(temp.getData());
+            if (temp.getLeft() != null) {
+                queue.add(temp.getLeft());
+            }
+            if (temp.getRight() != null) {
+                queue.add(temp.getRight());
+            }
+        }
         return list;
     }
 
-    private void preOrderTraversal(Node<T> node, List<T> list) {
-        if (node != null) {
-            list.add(node.getData());
-            preOrderTraversal(node.getLeft(), list);
-            preOrderTraversal(node.getRight(), list);
-        }
-    }
-
-    public List<T> inOrderTraversal() {
+    public List<T> reverseLevelOrderTraversal() {
         List<T> list = new ArrayList<>();
-        inOrderTraversal(root, list);
+        if (root == null) {
+            return list;
+        }
+        Queue<Node<T>> queue = new LinkedList<>();
+        Stack<Node<T>> stack = new Stack<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            Node<T> temp = queue.poll();
+            stack.push(temp);
+            if (temp.getRight() != null) {
+                queue.add(temp.getRight());
+            }
+            if (temp.getLeft() != null) {
+                queue.add(temp.getLeft());
+            }
+        }
+        while (!stack.isEmpty()) {
+            list.add(stack.pop().getData());
+        }
         return list;
-    }
-
-    private void inOrderTraversal(Node<T> node, List<T> list) {
-        if (node != null) {
-            inOrderTraversal(node.getLeft(), list);
-            list.add(node.getData());
-            inOrderTraversal(node.getRight(), list);
-        }
-    }
-
-    public List<T> postOrderTraversal() {
-        List<T> list = new ArrayList<>();
-        postOrderTraversal(root, list);
-        return list;
-    }
-
-    private void postOrderTraversal(Node<T> node, List<T> list) {
-        if (node != null) {
-            postOrderTraversal(node.getLeft(), list);
-            postOrderTraversal(node.getRight(), list);
-            list.add(node.getData());
-        }
-    }
-
-    private Node<T> find(T data) {
-        return find(root, data);
-    }
-
-    private Node<T> find(Node<T> node, T data) {
-        if (node == null || node.getData().equals(data)) {
-            return node;
-        } else {
-            if (node.getData().compareTo(data) > 0) {
-                return find(node.getLeft(), data);
-            } else {
-                return find(node.getRight(), data);
-            }
-        }
-    }
-
-    public boolean contains(T data) {
-        return find(data) != null;
-
-    }
-
-    private FatherChildNodePair<T> findFatherChildNodePair(Node<T> parent, Node<T> node, T data) {
-        if (node == null) {
-            return null;
-        }
-        if (node.getData().equals(data)) {
-            return new FatherChildNodePair<>(parent, node);
-        } else {
-            if (node.getData().compareTo(data) > 0) {
-                return findFatherChildNodePair(node, node.getLeft(), data);
-            } else {
-                return findFatherChildNodePair(node, node.getRight(), data);
-            }
-        }
-    }
-
-    public boolean remove(T data) {
-        FatherChildNodePair<T> fatherChildNodePair = findFatherChildNodePair(null, root, data);
-        if (fatherChildNodePair == null) {
-            return false;
-        }
-        Node<T> father = fatherChildNodePair.getFather();
-        Node<T> node = fatherChildNodePair.getChild();
-        if (father == null) {
-            removeRootNode();
-            return true;
-        }
-        if (node.getLeft() == null && node.getRight() == null) {
-            removeLeafNode(father, node);
-        } else if (node.getLeft() == null || node.getRight() == null) {
-            removeNodeWithOneChild(father, node);
-        } else {
-            removeNodeWithTwoChild(father, node);
-        }
-        return true;
-    }
-
-    private void removeRootNode() {
-        if (root.getLeft() == null && root.getRight() == null) {
-            removeLeafRootNode();
-        } else if (root.getRight() == null || root.getLeft() == null) {
-            removeRootNodeWithOneChild();
-        } else {
-            removeRootNodeWithTwoChild();
-        }
-    }
-
-    private void removeRootNodeWithTwoChild() {
-        Node<T> temp = root;
-        if (root.getRight().getLeft() == null) {
-            root = root.getRight();
-            root.setLeft(temp.getLeft());
-        } else {
-            FatherChildNodePair<T> fatherChildNodePair = findLeftMostNode(root, root.getRight());
-            root = fatherChildNodePair.getChild();
-            root.setLeft(temp.getLeft());
-            if (root.getRight() != null) {
-                fatherChildNodePair.getFather().setLeft(root.getRight());
-            } else {
-                fatherChildNodePair.getFather().setLeft(null);
-            }
-            root.setRight(temp.getRight());
-        }
-    }
-
-    private void removeRootNodeWithOneChild() {
-        root = root.getLeft() == null ? root.getRight() : root.getLeft();
-    }
-
-    private void removeLeafRootNode() {
-        root = null;
-    }
-
-    private void removeLeafNode(Node<T> father, Node<T> node) {
-        if (father.getLeft() == node) {
-            father.setLeft(null);
-        } else {
-            father.setRight(null);
-        }
-    }
-
-    private void removeNodeWithOneChild(Node<T> father, Node<T> node) {
-        if (father.getLeft() == node) {
-            father.setLeft(node.getLeft() == null ? node.getRight() : node.getLeft());
-        } else {
-            father.setRight(node.getLeft() == null ? node.getRight() : node.getLeft());
-        }
-    }
-
-    private void removeNodeWithTwoChild(Node<T> father, Node<T> node) {
-        if (father.getLeft() == node) {
-            if (node.getRight().getLeft() == null) {
-                father.setLeft(node.getRight());
-                father.getLeft().setLeft(node.getLeft());
-            } else {
-                FatherChildNodePair<T> fatherChildNodePair = findLeftMostNode(node, node.getRight());
-                father.setLeft(fatherChildNodePair.getChild());
-                father.getLeft().setLeft(node.getLeft());
-                if (father.getLeft().getRight() != null) {
-                    fatherChildNodePair.getFather().setLeft(father.getLeft().getRight());
-                } else {
-                    fatherChildNodePair.getFather().setLeft(null);
-                }
-                father.getLeft().setRight(node.getRight());
-            }
-        } else {
-            if (node.getRight().getLeft() == null) {
-                father.setRight(node.getRight());
-                father.getRight().setLeft(node.getLeft());
-            } else {
-                FatherChildNodePair<T> fatherChildNodePair = findLeftMostNode(node, node.getRight());
-                father.setRight(fatherChildNodePair.getChild());
-                father.getRight().setLeft(node.getLeft());
-                if (father.getRight().getRight() != null) {
-                    fatherChildNodePair.getFather().setLeft(father.getRight().getRight());
-                } else {
-                    fatherChildNodePair.getFather().setLeft(null);
-                }
-                father.getRight().setRight(node.getRight());
-            }
-        }
-    }
-
-    private FatherChildNodePair<T> findLeftMostNode(Node<T> father, Node<T> node) {
-        if (node.getLeft() == null) {
-            return new FatherChildNodePair<>(father, node);
-        }
-        return findLeftMostNode(node, node.getLeft());
-    }
-}
-
-class FatherChildNodePair<T> {
-
-    private Node<T> father;
-
-    private Node<T> child;
-
-    public FatherChildNodePair(Node<T> father, Node<T> child) {
-        this.father = father;
-        this.child = child;
-    }
-
-    public Node<T> getFather() {
-        return father;
-    }
-
-    public Node<T> getChild() {
-        return child;
     }
 }
