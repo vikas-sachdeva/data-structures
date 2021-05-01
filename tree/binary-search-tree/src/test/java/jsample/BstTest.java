@@ -21,13 +21,17 @@ public class BstTest {
         list.forEach(i -> integerRecursiveBst.add(i));
         list.forEach(i -> integerBst.add(i));
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.preOrderTraversal()).containsExactly(10, 3, 1, 6, 5, 8, 20, 30);
-        Collections.sort(list);
-        AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.inOrderTraversal()).containsExactlyElementsOf(list);
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.postOrderTraversal()).containsExactly(1, 5, 8, 6, 3, 30, 20, 10);
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.levelOrderTraversal()).containsExactly(10, 3, 20, 1, 6, 30, 5, 8);
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.reverseLevelOrderTraversal()).containsExactly(5, 8, 1, 6, 30, 3, 20, 10);
+
         AssertionsForInterfaceTypes.assertThat(integerBst.levelOrderTraversal()).containsExactly(10, 3, 20, 1, 6, 30, 5, 8);
         AssertionsForInterfaceTypes.assertThat(integerBst.reverseLevelOrderTraversal()).containsExactly(5, 8, 1, 6, 30, 3, 20, 10);
+        AssertionsForInterfaceTypes.assertThat(integerBst.preOrderTraversal()).containsExactly(10, 3, 1, 6, 5, 8, 20, 30);
+
+        Collections.sort(list);
+        AssertionsForInterfaceTypes.assertThat(integerBst.inOrderTraversal()).containsExactlyElementsOf(list);
+        AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.inOrderTraversal()).containsExactlyElementsOf(list);
     }
 
     @Test
@@ -36,14 +40,17 @@ public class BstTest {
         list.forEach(i -> integerRecursiveBst.add(i));
         list.forEach(i -> integerBst.add(i));
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.preOrderTraversal()).containsExactly(60, 50, 44, 45, 56, 59, 77, 71);
-        Collections.sort(list);
-        AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.inOrderTraversal()).containsExactlyElementsOf(list);
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.postOrderTraversal()).containsExactly(45, 44, 59, 56, 50, 71, 77, 60);
+
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.levelOrderTraversal()).containsExactly(60, 50, 77, 44, 56, 71, 45, 59);
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.reverseLevelOrderTraversal())
-                                   .containsExactly(45, 59, 44, 56, 71, 50, 77, 60);
+                .containsExactly(45, 59, 44, 56, 71, 50, 77, 60);
+
         AssertionsForInterfaceTypes.assertThat(integerBst.levelOrderTraversal()).containsExactly(60, 50, 77, 44, 56, 71, 45, 59);
         AssertionsForInterfaceTypes.assertThat(integerBst.reverseLevelOrderTraversal()).containsExactly(45, 59, 44, 56, 71, 50, 77, 60);
+        Collections.sort(list);
+        AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.inOrderTraversal()).containsExactlyElementsOf(list);
+        AssertionsForInterfaceTypes.assertThat(integerBst.inOrderTraversal()).containsExactlyElementsOf(list);
     }
 
     @Test
@@ -125,8 +132,8 @@ public class BstTest {
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.inOrderTraversal()).containsExactlyElementsOf(list);
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.remove(100)).isTrue();
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.inOrderTraversal())
-                                   .doesNotContain(100)
-                                   .containsExactly(90, 105, 107, 110);
+                .doesNotContain(100)
+                .containsExactly(90, 105, 107, 110);
     }
 
     @Test
@@ -141,8 +148,8 @@ public class BstTest {
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.remove(80)).isTrue();
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.remove(113)).isTrue();
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.inOrderTraversal())
-                                   .doesNotContain(83, 106, 80, 113)
-                                   .containsExactly(90, 95, 100, 105, 107, 110, 111, 112);
+                .doesNotContain(83, 106, 80, 113)
+                .containsExactly(90, 95, 100, 105, 107, 110, 111, 112);
     }
 
     @Test
@@ -154,8 +161,8 @@ public class BstTest {
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.remove(80)).isTrue();
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.remove(107)).isTrue();
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.inOrderTraversal())
-                                   .doesNotContain(80, 107)
-                                   .containsExactly(83, 90, 95, 100, 105, 106, 110, 111, 112, 113);
+                .doesNotContain(80, 107)
+                .containsExactly(83, 90, 95, 100, 105, 106, 110, 111, 112, 113);
     }
 
     @Test
@@ -167,8 +174,8 @@ public class BstTest {
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.remove(90)).isTrue();
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.remove(112)).isTrue();
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.inOrderTraversal())
-                                   .doesNotContain(90, 112)
-                                   .containsExactly(80, 83, 95, 100, 105, 106, 107, 110, 111, 113);
+                .doesNotContain(90, 112)
+                .containsExactly(80, 83, 95, 100, 105, 106, 107, 110, 111, 113);
     }
 
     @Test
@@ -179,8 +186,8 @@ public class BstTest {
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.inOrderTraversal()).containsExactlyElementsOf(list);
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.remove(110)).isTrue();
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.inOrderTraversal())
-                                   .doesNotContain(110)
-                                   .containsExactly(80, 83, 90, 95, 100, 105, 106, 107, 111, 112, 113);
+                .doesNotContain(110)
+                .containsExactly(80, 83, 90, 95, 100, 105, 106, 107, 111, 112, 113);
     }
 
     @Test
@@ -191,8 +198,8 @@ public class BstTest {
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.inOrderTraversal()).containsExactlyElementsOf(list);
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.remove(100)).isTrue();
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.inOrderTraversal())
-                                   .doesNotContain(100)
-                                   .containsExactly(80, 83, 90, 95, 105, 106, 107, 110, 111, 112, 113);
+                .doesNotContain(100)
+                .containsExactly(80, 83, 90, 95, 105, 106, 107, 110, 111, 112, 113);
     }
 
     @Test
@@ -206,8 +213,8 @@ public class BstTest {
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.remove(105)).isTrue();
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.remove(100)).isTrue();
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.inOrderTraversal())
-                                   .doesNotContain(111, 113, 105, 100)
-                                   .containsExactly(80, 83, 90, 95, 106, 107, 110, 112);
+                .doesNotContain(111, 113, 105, 100)
+                .containsExactly(80, 83, 90, 95, 106, 107, 110, 112);
     }
 
     @Test
@@ -218,8 +225,8 @@ public class BstTest {
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.inOrderTraversal()).containsExactlyElementsOf(list);
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.remove(110)).isTrue();
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.inOrderTraversal())
-                                   .doesNotContain(110)
-                                   .containsExactly(80, 83, 90, 95, 100, 105, 106, 107, 111, 113);
+                .doesNotContain(110)
+                .containsExactly(80, 83, 90, 95, 100, 105, 106, 107, 111, 113);
     }
 
     @Test
@@ -230,8 +237,8 @@ public class BstTest {
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.inOrderTraversal()).containsExactlyElementsOf(list);
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.remove(90)).isTrue();
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.inOrderTraversal())
-                                   .doesNotContain(90)
-                                   .containsExactly(80, 83, 93, 95, 100, 105, 106, 107, 110, 111, 113);
+                .doesNotContain(90)
+                .containsExactly(80, 83, 93, 95, 100, 105, 106, 107, 110, 111, 113);
     }
 
     @Test
@@ -242,8 +249,8 @@ public class BstTest {
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.inOrderTraversal()).containsExactlyElementsOf(list);
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.remove(90)).isTrue();
         AssertionsForInterfaceTypes.assertThat(integerRecursiveBst.inOrderTraversal())
-                                   .doesNotContain(90)
-                                   .containsExactly(80, 83, 93, 94, 95, 100, 105, 106, 107, 110, 111, 113);
+                .doesNotContain(90)
+                .containsExactly(80, 83, 93, 94, 95, 100, 105, 106, 107, 110, 111, 113);
     }
 
     @Test
@@ -263,7 +270,7 @@ public class BstTest {
     @Test
     public void findHeightTest3() {
         AssertionsForInterfaceTypes.assertThatExceptionOfType(IllegalStateException.class)
-                                   .isThrownBy(() -> integerRecursiveBst.findHeight());
+                .isThrownBy(() -> integerRecursiveBst.findHeight());
     }
 
     @Test

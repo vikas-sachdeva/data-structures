@@ -25,17 +25,19 @@ public class Bst<T extends Comparable<T>> {
     }
 
     private Node<T> findSuitableNode(Node<T> node, T data) {
-        if (node.getData().compareTo(data) > 0) {
-            if (node.getLeft() == null) {
-                return node;
+        while (true) {
+            if (node.getData().compareTo(data) > 0) {
+                if (node.getLeft() == null) {
+                    return node;
+                } else {
+                    node = node.getLeft();
+                }
             } else {
-                return findSuitableNode(node.getLeft(), data);
-            }
-        } else {
-            if (node.getRight() == null) {
-                return node;
-            } else {
-                return findSuitableNode(node.getRight(), data);
+                if (node.getRight() == null) {
+                    return node;
+                } else {
+                    node = node.getRight();
+                }
             }
         }
     }
@@ -80,6 +82,48 @@ public class Bst<T extends Comparable<T>> {
         }
         while (!stack.isEmpty()) {
             list.add(stack.pop().getData());
+        }
+        return list;
+    }
+
+    public List<T> preOrderTraversal() {
+        List<T> list = new ArrayList<>();
+        Stack<Node<T>> stack = new Stack<>();
+        Node<T> node = root;
+        while (node != null || !stack.isEmpty()) {
+            if (node == null) {
+                node = stack.pop();
+            }
+            list.add(node.getData());
+            if (node.getRight() != null) {
+                stack.push(node.getRight());
+            }
+            node = node.getLeft();
+        }
+        return list;
+    }
+
+    public List<T> inOrderTraversal() {
+        List<T> list = new ArrayList<>();
+        if (root == null) {
+            return list;
+        }
+        Node<T> node = root;
+        Stack<Node<T>> stack = new Stack<>();
+        while (node != null) {
+            stack.push(node);
+            node = node.getLeft();
+        }
+        while (!stack.isEmpty()) {
+            node = stack.pop();
+            list.add(node.getData());
+            if (node.getRight() != null) {
+                node = node.getRight();
+                while (node != null) {
+                    stack.push(node);
+                    node = node.getLeft();
+                }
+            }
         }
         return list;
     }
