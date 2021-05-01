@@ -6,25 +6,21 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
-import java.util.Stack;
 
 public class Graph<T> {
-
-    private Stack<Node<T>> stack;
 
     private Set<Node<T>> set;
 
     private Queue<Node<T>> queue;
 
-    public List<T> dfs(Node<T> node) {
-        stack = new Stack<>();
+    public List<T> depthFirstTraversal(Node<T> node) {
         set = new HashSet<>();
         List<T> dataList = new ArrayList<>();
-        dfs(node, dataList);
+        depthFirstTraversal(node, dataList);
         return dataList;
     }
 
-    private void dfs(Node<T> node, List<T> dataList) {
+    private void depthFirstTraversal(Node<T> node, List<T> dataList) {
         if (set.contains(node)) {
             return;
         }
@@ -32,23 +28,23 @@ public class Graph<T> {
         dataList.add(node.getData());
         for (Node<T> n : node.getNodes()) {
             if (!set.contains(n)) {
-                stack.add(n);
+                depthFirstTraversal(n, dataList);
             }
-        }
-        while (!stack.isEmpty()) {
-            dfs(stack.pop(), dataList);
         }
     }
 
-    public List<T> bfs(Node<T> node) {
+    public List<T> breadthFirstTraversal(Node<T> node) {
         queue = new LinkedList<>();
         set = new HashSet<>();
         List<T> dataList = new ArrayList<>();
-        bfs(node, dataList);
+        queue.add(node);
+        while (!queue.isEmpty()) {
+            breadthFirstTraversal(queue.remove(), dataList);
+        }
         return dataList;
     }
 
-    private void bfs(Node<T> node, List<T> dataList) {
+    private void breadthFirstTraversal(Node<T> node, List<T> dataList) {
         if (set.contains(node)) {
             return;
         }
@@ -58,9 +54,6 @@ public class Graph<T> {
             if (!set.contains(n)) {
                 queue.add(n);
             }
-        }
-        while (!queue.isEmpty()) {
-            bfs(queue.remove(), dataList);
         }
     }
 }

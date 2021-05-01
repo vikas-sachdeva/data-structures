@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 public class GraphTest {
 
-    private Graph graph = new Graph();
+    private Graph<Integer> graph = new Graph<>();
 
     private Node<Integer> integerNode;
 
@@ -31,36 +31,36 @@ public class GraphTest {
     }
 
     @Test
-    public void dfsTest1() {
-        AssertionsForInterfaceTypes.assertThat(graph.dfs(integerNode)).containsExactly(50, 22, 17, 11, 26, 20, 24, 13, 9, 15);
+    public void depthFirstTraversalTest1() {
+        AssertionsForInterfaceTypes.assertThat(graph.depthFirstTraversal(integerNode)).containsExactly(50, 20, 24, 26, 15, 13, 17, 11, 9, 22);
     }
 
     @Test
-    public void dfsTest2() {
-        AssertionsForInterfaceTypes.assertThat(graph.dfs(integerNode.getNodes().get(1)))
-                                   .containsExactly(22, 17, 11, 26);
+    public void depthFirstTraversalTest2() {
+        AssertionsForInterfaceTypes.assertThat(graph.depthFirstTraversal(integerNode.getNodes().get(1)))
+                .containsExactly(22, 26, 17, 11);
     }
 
     @Test
-    public void dfsTest3() {
-        AssertionsForInterfaceTypes.assertThat(graph.dfs(integerNode.getNodes().get(0).getNodes().get(0)))
-                                   .containsExactly(24, 13, 9, 11, 17, 15, 26);
+    public void depthFirstTraversalTest3() {
+        AssertionsForInterfaceTypes.assertThat(graph.depthFirstTraversal(integerNode.getNodes().get(0).getNodes().get(0)))
+                .containsExactly(24, 26, 15, 13, 17, 11, 9);
     }
 
     @Test
-    public void bfsTest1() {
-        AssertionsForInterfaceTypes.assertThat(graph.bfs(integerNode)).containsExactly(50, 20, 22, 24, 26, 17, 15, 13, 11, 9);
+    public void breadthFirstTraversal1() {
+        AssertionsForInterfaceTypes.assertThat(graph.breadthFirstTraversal(integerNode)).containsExactly(50, 20, 22, 24, 26, 17, 15, 13, 11, 9);
     }
 
     @Test
-    public void bfsTest2() {
-        AssertionsForInterfaceTypes.assertThat(graph.bfs(integerNode.getNodes().get(1)))
-                                   .containsExactly(22, 26, 17, 11);
+    public void breadthFirstTraversal2() {
+        AssertionsForInterfaceTypes.assertThat(graph.breadthFirstTraversal(integerNode.getNodes().get(1)))
+                .containsExactly(22, 26, 17, 11);
     }
 
     @Test
-    public void bfsTest3() {
-        AssertionsForInterfaceTypes.assertThat(graph.bfs(integerNode.getNodes().get(0).getNodes().get(0)))
-                                   .containsExactly(24, 26, 15, 13, 17, 11, 9);
+    public void breadthFirstTraversal3() {
+        AssertionsForInterfaceTypes.assertThat(graph.breadthFirstTraversal(integerNode.getNodes().get(0).getNodes().get(0)))
+                .containsExactly(24, 26, 15, 13, 17, 11, 9);
     }
 }

@@ -4,9 +4,9 @@ public class HashTable<T, V> {
 
     private static final int DEFAULT_CAPACITY = 10;
 
-    private static final double DEFAULT_GROWTH_FACTOR = 0.80;
+    private static final double DEFAULT_GROWTH_FACTOR = 1.5;
 
-    private static final double DEFAULT_FILL_FACTOR = 1.5;
+    private static final double DEFAULT_FILL_FACTOR = 0.80;
 
     private double growthFactor;
 
@@ -20,15 +20,15 @@ public class HashTable<T, V> {
 
     private int totalCapacity;
 
-    public HashTable(int initialCapacity, double growthFactor, double fillFactor) {
+    public HashTable(int initialCapacity, double fillFactor, double growthFactor) {
         if (initialCapacity < 1) {
             throw new IllegalArgumentException("Capacity can not be less than 1");
         }
-        if (growthFactor <= 0 || growthFactor > 1) {
-            throw new IllegalArgumentException("Growth factor can not be less than or equal to 0 and greater than 1");
+        if (fillFactor <= 0 || fillFactor > 1) {
+            throw new IllegalArgumentException("Fill factor can not be less than or equal to 0 and greater than 1");
         }
-        if (fillFactor <= 1) {
-            throw new IllegalArgumentException("Fill factor can not be less than or equal to 1");
+        if (growthFactor <= 1) {
+            throw new IllegalArgumentException("Growth factor can not be less than or equal to 1");
         }
         this.growthFactor = growthFactor;
         this.fillFactor = fillFactor;
@@ -38,7 +38,7 @@ public class HashTable<T, V> {
     }
 
     public HashTable(int initialCapacity) {
-        this(initialCapacity, DEFAULT_GROWTH_FACTOR, DEFAULT_FILL_FACTOR);
+        this(initialCapacity, DEFAULT_FILL_FACTOR, DEFAULT_GROWTH_FACTOR);
     }
 
     public HashTable() {
@@ -46,7 +46,7 @@ public class HashTable<T, V> {
     }
 
     public void put(T key, V value) {
-        if (filledCapacity + 1 >= totalCapacity * growthFactor) {
+        if (filledCapacity + 1 >= totalCapacity * fillFactor) {
             resize();
         }
         int hashValue = hashing.getHash(key);
@@ -65,7 +65,7 @@ public class HashTable<T, V> {
     }
 
     private void resize() {
-        totalCapacity = (int) (totalCapacity * fillFactor);
+        totalCapacity = (int) (totalCapacity * growthFactor);
         Node<T, V>[] oldNodeArray = nodeArray;
         nodeArray = new Node[totalCapacity];
         filledCapacity = 0;
