@@ -46,7 +46,7 @@ public class DoublyEndedQueueTest {
     @Test
     public void enqueDequeTest3() {
         AssertionsForInterfaceTypes.assertThatExceptionOfType(QueueEmptyException.class)
-                                   .isThrownBy(() -> integerDoublyEndedQueue.dequeHead());
+                .isThrownBy(() -> integerDoublyEndedQueue.dequeHead());
         AssertionsForInterfaceTypes.assertThat(integerDoublyEndedQueue.isEmpty()).isTrue();
         List<Integer> input1 = Arrays.asList(10, 20);
         input1.forEach(i -> integerDoublyEndedQueue.enqueHead(i));
@@ -58,7 +58,7 @@ public class DoublyEndedQueueTest {
         AssertionsForInterfaceTypes.assertThat(integerDoublyEndedQueue.dequeTail()).isEqualTo(40);
         AssertionsForInterfaceTypes.assertThat(integerDoublyEndedQueue.dequeTail()).isEqualTo(10);
         AssertionsForInterfaceTypes.assertThatExceptionOfType(QueueEmptyException.class)
-                                   .isThrownBy(() -> integerDoublyEndedQueue.dequeTail());
+                .isThrownBy(() -> integerDoublyEndedQueue.dequeTail());
         AssertionsForInterfaceTypes.assertThat(integerDoublyEndedQueue.isEmpty()).isTrue();
     }
 
@@ -73,10 +73,13 @@ public class DoublyEndedQueueTest {
     @Test
     public void getAllDataTest1() {
         AssertionsForInterfaceTypes.assertThat(stringDoublyEndedQueue.getAllData()).containsExactly("First", "middle", "Last");
+        AssertionsForInterfaceTypes.assertThat(stringDoublyEndedQueue.getAllDataInReverseOrder()).containsExactly("Last", "middle", "First");
         stringDoublyEndedQueue.enqueHead("temp");
         AssertionsForInterfaceTypes.assertThat(stringDoublyEndedQueue.getAllData()).containsExactly("temp", "First", "middle", "Last");
+        AssertionsForInterfaceTypes.assertThat(stringDoublyEndedQueue.getAllDataInReverseOrder()).containsExactly("Last", "middle", "First", "temp");
         stringDoublyEndedQueue.enqueTail("temp");
         AssertionsForInterfaceTypes.assertThat(stringDoublyEndedQueue.getAllData())
-                                   .containsExactly("temp", "First", "middle", "Last", "temp");
+                .containsExactly("temp", "First", "middle", "Last", "temp");
+        AssertionsForInterfaceTypes.assertThat(stringDoublyEndedQueue.getAllDataInReverseOrder()).containsExactly("temp", "Last", "middle", "First", "temp");
     }
 }

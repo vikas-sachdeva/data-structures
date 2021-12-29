@@ -13,7 +13,7 @@ public class DoublyEndedQueue<T> {
 
     public void enqueTail(T t) {
         Node<T> node = new Node<>(t, null, tail);
-        if (head == null) {
+        if (isEmpty()) {
             head = tail = node;
         } else {
             tail.setNext(node);
@@ -23,7 +23,7 @@ public class DoublyEndedQueue<T> {
 
     public void enqueHead(T t) {
         Node<T> node = new Node<>(t, head, null);
-        if (head == null) {
+        if (isEmpty()) {
             head = tail = node;
         } else {
             head.setPrevious(node);
